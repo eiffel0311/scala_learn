@@ -106,6 +106,7 @@ array1(0) = 0
 array1(1) = 1
 var array2 = Array[Int](1, 2, 3)
 
+import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 val array3 = new ArrayBuffer[Int]()
 array3 += (1, 2, 3)
@@ -122,4 +123,22 @@ metrix(0)(0) = 1
 /*
 第四章 映射和元组
 */
+// 1 映射 可变， 不可变
+val map1 = Map("1" -> 1, "2" -> 2)
+val map2 = new mutable.HashMap[String, Int]()
+map2.put("1", 1)
+map2.put("2", 2)
+map2.put("3", 3)
 
+map2.remove("1")
+map2("2") = 4
+
+for((k, v) <- map2){
+  printf("key: %s   value: %s\n", k, v)
+}
+
+// 2 元组， 包含不同类型的集合
+val tupple = (1, 1.1, "test")
+println(tupple._1)
+println(tupple._2)
+println(tupple._3)
