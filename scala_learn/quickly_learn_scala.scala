@@ -142,3 +142,92 @@ val tupple = (1, 1.1, "test")
 println(tupple._1)
 println(tupple._2)
 println(tupple._3)
+
+
+/*
+第五章 类
+ */
+// 1 简单类
+class testClass(){
+
+  private var myage: Int = 0
+  var name: String = "Tom"
+
+  def testMethod(x: Int): Unit ={
+    printf("i am testMethod, params is %d \n", x)
+  }
+
+  // getter setter 方法
+  def age = myage
+
+  def age_=(age: Int): Unit ={
+    myage = age
+  }
+
+}
+
+val mytestClass = new testClass()
+mytestClass.testMethod(1)
+
+printf("my age is : %s\n", mytestClass.age)
+mytestClass.age = 21
+printf("my age is : %s\n", mytestClass.age)
+
+// public 字段自带setter, getter
+printf("my name is : %s\n", mytestClass.name)
+mytestClass.name = "Hack"
+printf("my name is : %s\n", mytestClass.name)
+
+// 2 辅助构造器
+
+class Person(){
+
+  private var nage: String = ""
+  private var age: Int = 0
+  private var address: String = ""
+
+  def this(name: String){
+    this()
+    this.nage = name
+  }
+
+  def this(name: String, age: Int){
+    this(name)
+    this.age = age
+  }
+
+  def this(name: String, age: Int, address: String){
+    this(name, age)
+    this.address = address
+  }
+}
+val person1 = new Person("Tom")
+val person2 = new Person("Tom", 21)
+val person3 = new Person("Tom", 21, "beijing")
+
+// 3 主构造器, 同时 val 变量生成setter 方法， var 变量生成setter 和 getter 方法
+
+class Person2(val name: String, val age: Int, var address: String){
+
+}
+val person2_1 = new Person2("Tome", 21, "beijing")
+printf("name: %s  age: %d  address: %s\n", person2_1.name, person2_1.age, person2_1.address)
+
+// 4 嵌套类
+
+class Person3(){
+
+  class Person4(){
+    def testMethod(): Unit ={
+      println("i am person4's test method")
+    }
+  }
+  private var person:Person4 = new Person4()
+
+  def testMethod(): Unit ={
+    println("i am person3's test method")
+    person.testMethod()
+  }
+}
+var person3_1 = new Person3
+person3_1.testMethod()
