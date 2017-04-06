@@ -72,8 +72,31 @@ println(for_vector)
 // --------------高级for循环， 推导式
 
 // 5 函数
+def test_function(x: Double): Double = {
+  x
+}
+println(test_function(11))
+// 默认参数，带名参数, 变长参数
+def test_function2(x: Double, y: Double = 1): Double = {
+  x + y
+}
+println(test_function2(1))
+println(test_function2(1, 2))
+println(test_function2(x = 1, y = 2))
+def test_function3(x: Double, y:Double*): Double = {
+  var sum = x
+  for(i <- y){
+    sum = sum + i
+  }
+  sum
+}
+println(test_function3(1, 1, 2, 3))
+
+// 6 懒值， 第一次初始化是在使用的时候
+lazy val lazy_val = 1
+println(lazy_val)
 
 
-
-//
-//第三章 数组和相关操作
+/*
+第三章 数组和相关操作
+*/
