@@ -100,3 +100,26 @@ println(lazy_val)
 /*
 第三章 数组和相关操作
 */
+// 1 定长， 变长数组
+var array1 = new Array[Int](2)
+array1(0) = 0
+array1(1) = 1
+var array2 = Array[Int](1, 2, 3)
+
+import scala.collection.mutable.ArrayBuffer
+val array3 = new ArrayBuffer[Int]()
+array3 += (1, 2, 3)
+array3.insert(2, 6)
+// 数组遍历
+for(i <- array3){
+  println(i)
+}
+// 多维数组
+var metrix = Array.ofDim[Double](3, 4)
+metrix(0)(0) = 1
+
+
+/*
+第四章 映射和元组
+*/
+
