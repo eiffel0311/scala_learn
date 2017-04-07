@@ -231,3 +231,106 @@ class Person3(){
 }
 var person3_1 = new Person3
 person3_1.testMethod()
+
+
+/*
+第六章 对象
+ */
+
+// 1 单例对象， 用来存放常量， 共享数据
+object Account{
+  private var lastNumber:Int = 0
+  def newUniqNumber(): Int ={
+    lastNumber = lastNumber + 1
+    lastNumber
+  }
+}
+// Account的构造器只会执行一次
+println(Account.newUniqNumber())
+println(Account.newUniqNumber())
+println(Account.newUniqNumber())
+
+// 数据库连接例子
+object DBConection{
+  private var dbConection: String = null
+  def getInstance():String ={
+    if(dbConection == null){
+      dbConection = "you get a connection"
+    }
+    dbConection
+  }
+}
+println(DBConection.getInstance())
+println(DBConection.getInstance())
+
+// 2 伴生对象(Object 的同名类)
+class Account(){
+  val id = Account.newUniqNumber()
+}
+println(new Account().id)
+
+// 3 扩展类或特质的对象
+abstract class UndoableAction(){ // 扩展类的方法可以实现， 也可以不实现
+  def test():Unit
+  def test2():Unit ={
+    println("i am abstrac class method")
+  }
+}
+
+trait UndoableAction2{} // 特质
+trait UndoableAction3{}
+
+object DoNoththing extends UndoableAction() with UndoableAction2 with UndoableAction3{ // 单继承多实现
+  override def test(): Unit ={
+    println("i was overwrite")
+  }
+  def myselfMethod(): Unit ={
+    println("i blongs to myself")
+  }
+}
+DoNoththing.test()
+DoNoththing.myselfMethod()
+DoNoththing.test2()
+
+// 4 apply 方法, 借用伴生对象生成实例对象
+class ApplyTest(){
+  private var x: Int = 0
+  def this(x: Int){
+    this()
+    this.x = x
+  }
+  def printtest():Unit ={
+    println("i am test methods")
+  }
+
+}
+object ApplyTest{
+  def apply(x: Int): ApplyTest ={
+    new ApplyTest(x)
+  }
+}
+val myApplyTest = ApplyTest(1)
+myApplyTest.printtest()
+
+// 5 应用程序对象， 继承App， main 方法的替代
+object AppClass{
+  def main(args: Array[String]): Unit ={
+    println("i am main methods")
+  }
+}
+
+object AppClass2 extends  App{
+  println("i am main methods")
+}
+
+// 6 枚举, 主要用来保存常量
+object TrafficLightColor extends Enumeration{
+  val Red = 1
+  val Yellow = 2
+  val Green = 3
+}
+println(TrafficLightColor.Red)
+println(TrafficLightColor.Yellow)
+println(TrafficLightColor.Green)
+
+
