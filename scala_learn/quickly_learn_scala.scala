@@ -413,4 +413,61 @@ import scala._
 import Predef._
  */
 
+/*
+10 继承
 
+ */
+// 抽象类
+abstract class abstractClass{
+  // 抽象字段
+  val abstractField: String
+  // 抽象方法
+  def abstracMethod: String
+}
+
+class extendsClassFather() extends abstractClass{
+  val abstractField = "defaultField"
+  val name: String = "defaultName"
+  // 受保护的字段, 可以被子类访问
+  protected val age:Int = 21
+  // 私有字段， 不能被子类访问
+  private val address: String = "BeiJing"
+
+  def abstracMethod():String ={""}
+
+  def testMethod(): Unit={ println("i am do nothing")}
+  // 类比字段
+  protected def testMetho2():Unit ={
+  }
+  // 类比字段
+  private def testMethods3():Unit ={
+
+  }
+}
+
+// 继承
+class extendsClassSun extends extendsClassFather{
+  // 匿名子类
+  val test = new extendsClassFather(){
+    def testMethods4():Unit ={
+      println("i am anonymous class")
+    }
+  }
+  // 重写字段
+  override val age:Int = 22
+  // 重写方法
+  override def testMethod():Unit ={
+    println("i was overide by extendClassSun")
+  }
+}
+
+val extendsClassSun = new extendsClassSun()
+// 类型检查
+if(extendsClassSun.isInstanceOf[extendsClassSun]){
+  println("i am sun")
+}
+else if(extendsClassSun.isInstanceOf[extendsClassFather]){
+  println("i am father")
+}
+// 类型转换
+extendsClassSun.asInstanceOf[extendsClassFather].testMethod()
