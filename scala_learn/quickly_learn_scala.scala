@@ -106,6 +106,8 @@ array1(0) = 0
 array1(1) = 1
 var array2 = Array[Int](1, 2, 3)
 
+
+
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 val array3 = new ArrayBuffer[Int]()
@@ -332,5 +334,83 @@ object TrafficLightColor extends Enumeration{
 println(TrafficLightColor.Red)
 println(TrafficLightColor.Yellow)
 println(TrafficLightColor.Green)
+
+/*
+第七章 包和引入, 代码参考package_ex.scala
+ */
+// 1 包的手动编译执行
+// 创建维文件 package_ex.scala, 添加如下代码：
+/*
+package pack1.pack2
+
+class testClass(){
+  def testMethods():Unit ={
+    println("i am package test class method")
+  }
+}
+*/
+// 执行命令scalac package_ex.scala， 然后执行如下脚本， 必要的时候使用 -cp 参数
+// import pack1.pack2
+// new pack1.pack2.testClass().testMethods()
+
+
+// 2 包的命名 以及 作用域规则
+// 顶文件头写 package a.b.c
+// 嵌套 package a{ package b{ package c}}
+// 作用越 package 内部可以向上访问
+
+
+
+// 3 串联式包语句
+// package a.b { package {}}
+
+
+// 4 文件顶部标记
+// pack a.b.c
+
+// 5 包对象
+/*
+package pack1.pack2
+
+class testClass(){
+  def testMethods():Unit ={
+    println("i am package test class method")
+  }
+}
+
+package object testPackageOject{
+  val name = "defaultName"
+}
+ */
+// 可以直接访问name : pack1.pack2.testPackageObject.name
+
+// 6 包的可见性, 实际定义方法的可见性
+// private[pack2] 说明 此方法在pack2 下可见
+// protected[pack2] 说明在 pack2 以及以下 可见
+
+
+// 7 引入
+// import a.b.TestClass
+// import a.b.{TestClass, TestClass2}
+// import a.b._
+
+
+// 8 任何地方都可以引入
+// 引入后， 效果向下延伸
+
+
+// 9 重命名和隐藏方法
+// 重命名
+// import a.b.{TestClass => TestClass2}
+// 隐藏引入， ex: TestClass 被隐藏， 解决类名冲突
+// import a.b.{TestClass => _, _}
+
+
+// 10 隐式引入, 已经引入， 不用显示引入的包
+/*
+import java.lang._
+import scala._
+import Predef._
+ */
 
 
