@@ -523,3 +523,37 @@ for(pattern3(num, item) <- pattern3.findAllIn("34 boys, 45, 56 girls")){
   println(num)
   println(item)
 }
+
+
+/*
+第十章 特质
+ */
+
+// 1 特质通过关键词extends , 当有多个特质的时候， 使用 with 关键词， 特质的方法重写不需要override
+// 2 带特质的对象
+trait Logged{
+  def log(msg: String): Unit={}
+}
+
+trait ConsoleLogger extends Logged{
+  // 自身类型， 限制了混入ConsoleLogger 的类必须是 Exception 的子类
+  this: Exception =>
+  override def log(msg: String):Unit ={
+    println(msg)
+  }
+}
+
+class MyAccount extends Exception with Logged{
+  def testMethods(msg: String): Unit ={
+    log(msg)
+  }
+}
+
+val objectWithTrait = new MyAccount() with ConsoleLogger// 带有特质的对象
+objectWithTrait.testMethods("with trait object")
+
+// 3 叠加在一起的特质， 顺序靠后的优先级高
+
+// 4 扩展类的特质： trait extends class
+
+// 5 自身类型, 只能被自身类型的子类继承
