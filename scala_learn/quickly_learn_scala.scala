@@ -110,6 +110,8 @@ var array2 = Array[Int](1, 2, 3)
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
+
+
 val array3 = new ArrayBuffer[Int]()
 array3 += (1, 2, 3)
 array3.insert(2, 6)
@@ -557,3 +559,74 @@ objectWithTrait.testMethods("with trait object")
 // 4 扩展类的特质： trait extends class
 
 // 5 自身类型, 只能被自身类型的子类继承
+
+
+/*
+第十一章 操作符
+ */
+
+// 1 标识符
+
+// 2 中置操作符
+
+// 3 一元操作符
+
+// 4 赋值操作符
+
+// 5 优先级
+
+// 6 结合性
+
+// 7 apply 和 update 方法
+class ApplyAndUpdateTest(){
+  var name: String = "defaultName"
+
+  def this(name: String){
+    this()
+    this.name = name
+  }
+
+  def update(key: String, value: String):Unit={
+     this.name = value
+  }
+
+  def printTest():Unit ={
+    println("--------" + this.name)
+  }
+
+}
+
+object ApplyAndUpdateTest{
+
+  def apply(name: String): ApplyAndUpdateTest ={
+    new ApplyAndUpdateTest(name)
+  }
+
+//  def unapply(applyAndUpdateTest: ApplyAndUpdateTest): Option[(String)] ={
+//    Some((applyAndUpdateTest.name))
+//  }
+
+  def unapplySeq(applyAndUpdateTest: ApplyAndUpdateTest): Option[Seq[String]] ={
+    Some("firstname lastname".split(" "))
+  }
+}
+
+val MyApplyAndUpdateTest =  ApplyAndUpdateTest("eiffel")
+MyApplyAndUpdateTest.printTest()
+MyApplyAndUpdateTest("name") = "name_of_my"
+MyApplyAndUpdateTest.printTest()
+
+// val ApplyAndUpdateTest(name) = MyApplyAndUpdateTest
+// println(name)
+
+// unapply, applySeq 测试
+MyApplyAndUpdateTest match {
+  //case ApplyAndUpdateTest(name) => println("unapply was call")
+  case ApplyAndUpdateTest(name1, name2) => println("unapplySeq was call")
+  case _ => println("---NONE--")
+}
+// 8 提取器, 参考上面unapply()方法
+
+// 9 带单个参数和无参数的提取器
+
+// 10 unapplySeq 方法, 和unapply 只能使用一个
