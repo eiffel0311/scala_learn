@@ -471,3 +471,55 @@ else if(extendsClassSun.isInstanceOf[extendsClassFather]){
 }
 // 类型转换
 extendsClassSun.asInstanceOf[extendsClassFather].testMethod()
+
+
+/*
+第九章 文件和正则
+ */
+
+// 1 读取文本文件
+import scala.io.Source
+val source = Source.fromFile("./README", "UTF-8")
+for(line <- source.getLines()){
+  println(line)
+}
+source.close()
+
+// 2 读取字符
+val source2 = Source.fromFile("./README", "UTF-8")
+for(c <- source2.buffered){
+  println(c)
+}
+source2.close()
+
+// 3 读取命令行
+//println("Please input anythind")
+//println("your input :" + readLine())
+
+// 4 URL 读取
+//for(line <- Source.fromURL("https://www.baidu.com", "UTF-8").getLines()){
+//  println(line)
+//}
+
+// 5 进程控制
+import sys.process._
+// 状态码返回
+val process_result = "ls -l".!
+println(process_result)
+// 执行结果以字符串返回
+val process_result2 = "ls -l".!!
+println(process_result2)
+
+// 6 正则表达式
+val pattern1 = "[0-9]+".r
+val pattern2 = """\s+[0-9]+\s""".r // 不考虑转义
+
+for(c <- pattern1.findAllIn("2434sadfas344")){
+  println(c)
+}
+
+val pattern3 = "([0-9]+) ([a-z]+)".r // 正则数组
+for(pattern3(num, item) <- pattern3.findAllIn("34 boys, 45, 56 girls")){
+  println(num)
+  println(item)
+}
