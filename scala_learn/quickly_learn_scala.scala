@@ -690,7 +690,7 @@ def kelihua2(x: Double) = (y: Double) => {x + y}
 println(kelihua(3, 3))
 println(kelihua2(3)(3))
 
-// 9 抽象控制, 给函数传递代码快, 没啥用， 忽略
+// 9 抽象控制, 给函数传递代码块, 没啥用， 忽略
 def myuntil(x: Int)(f:(Int) => Unit) {
   var i = 1
   while(i < x){
