@@ -607,7 +607,7 @@ object ApplyAndUpdateTest{
 //  }
 
   def unapplySeq(applyAndUpdateTest: ApplyAndUpdateTest): Option[Seq[String]] ={
-    Some("firstname lastname".split(" "))
+    Some("firstnamelastname".split(" "))
   }
 }
 
@@ -621,8 +621,8 @@ MyApplyAndUpdateTest.printTest()
 
 // unapply, applySeq 测试
 MyApplyAndUpdateTest match {
-  //case ApplyAndUpdateTest(name) => println("unapply was call")
-  case ApplyAndUpdateTest(name1, name2) => println("unapplySeq was call")
+  case ApplyAndUpdateTest(name) => println("unapplySeq was call1")
+  case ApplyAndUpdateTest(name1, name2) => println("unapplySeq was call2")
   case _ => println("---NONE--")
 }
 // 8 提取器, 参考上面unapply()方法
@@ -630,3 +630,74 @@ MyApplyAndUpdateTest match {
 // 9 带单个参数和无参数的提取器
 
 // 10 unapplySeq 方法, 和unapply 只能使用一个
+
+
+/*
+第十二章 高阶函数
+ */
+// 1 作为值的函数
+val fun = scala.math.ceil _ // _ 操作符把一个方法转换成函数， 给变量赋值
+println(fun(3.14))
+Array(3.14, 1.42, 2.0).map(x => fun(x)).foreach(x => println(x))
+
+// 2 匿名函数, 没有名字
+Array(3.14, 1.42, 2.0).map(x => 2*x)
+Array(3.14, 1.42, 2.0).map((x: Double) => 2*x)
+
+val fun2 = (x:Double) => 2*x
+Array(3.14, 1.42, 2.0).map(fun2)
+
+// 3 带函数参数的函数, 函数作为参数
+val fun3 = (x:Double) => 2*x
+def functionWithFunctionMethods(x:Double, f:(Double) => Double):Double ={
+  f(x)
+}
+println(functionWithFunctionMethods(3.3, fun3))
+
+// 4 参数类型推断, 不用声明入口参数的类型
+
+// 5 有用的高阶函数
+(1 to 20).map(x => " " * (9 - x/2) + "*" * x).foreach(println)
+println((1 to 9).reduceLeft((x, y) => x + y))
+
+// 6 闭包 可以访问一个函数里面局部变量的另外一个函数
+def mulBy(factor: Double) = (x: Double) => factor * x
+val mymulBy = mulBy(3)
+println(mymulBy(4))
+
+def mulBy2(factor: Double) = (x: Double, y:Double) => factor * (x + y)
+val mymulBy2 = mulBy2(3)
+println(mymulBy2(4, 3))
+
+// 7 SAM(single abstract method)转换, 通过传递对象的方式传递对象的方法， 相当于传递函数
+abstract class SAMTest{
+  def testMethods()
+}
+
+class SAMTest2(){
+  def testMethod(x: SAMTest): Unit ={
+    x.testMethods()
+  }
+}
+
+new SAMTest2().testMethod(new SAMTest {
+  override def testMethods(): Unit = {println("SAMTest")}
+})
+
+// 8 柯里化， 把接受多个参数的函数变成接受变成接受一个参数的函数
+def kelihua(x: Double, y:Double): Double ={ x + y}
+def kelihua2(x: Double) = (y: Double) => {x + y}
+println(kelihua(3, 3))
+println(kelihua2(3)(3))
+
+// 9 抽象控制, 给函数传递代码快, 没啥用， 忽略
+def myuntil(x: Int)(f:(Int) => Unit) {
+  var i = 1
+  while(i < x){
+    f(x)
+    i = i + 1
+  }
+}
+myuntil(9)( (x:Int) => println(x))
+
+// 10 return 表达式， 默认返回最后一行执行的返回值， 也可以显示返回， 但是不建议
