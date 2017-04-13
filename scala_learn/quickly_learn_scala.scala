@@ -704,6 +704,83 @@ myuntil(9)( (x:Int) => println(x))
 
 
 
+
+
 /*
 第十三章 集合
+set seq map， 了解集合的继承关系即可， 具体集合的使用查询API
+ */
+
+
+
+
+
+
+/*
+第十四章 模式匹配和样例类
+ */
+val matchVal = 1
+
+/*
+类型判断
+只要有一个case 判断成功， 接下来的case 将不会再判断
+设置守卫判断（if）
+case _ :当以上条件都不满足的时候， 执行该行代码
+*/
+matchVal match {
+  case tempMatchVal1:Int => println("type judge test：" + tempMatchVal1)
+  case 1 => println("matchval is 1")
+  case tempMatchVal2 if (tempMatchVal2 == 1) => println("mactchVal is :" + tempMatchVal2)
+  case _ => println("unknown nothing")
+}
+
+/*
+数组(array)， 元组(tupple)， 列表(list)匹配
+提取器， 正则匹配
+for 循环匹配
+ */
+
+/*
+样例类, copy 方法
+ */
+
+case class CaseClassTest(name: String, age:Int)
+val myCaseClassTest = new CaseClassTest("eiffel", 21)
+println(myCaseClassTest.name)
+val myCaseClassTest2 = myCaseClassTest.copy()
+println(myCaseClassTest2.name)
+val myCaseClassTest3 = myCaseClassTest.copy(name = "eiffel2")
+println(myCaseClassTest3.name)
+
+/*
+密封类， 不能在类定义之外定义任何新的子类, 所有的子类定义在同一个文件中
+ */
+sealed abstract class Class1
+case class Class2() extends Class1
+case class Class3() extends Class1
+
+
+/*
+模拟枚举
+
+sealed abstract class TrafficLightColors
+case class Red extends TrafficLightColors
+case class Yellow extends TrafficLightColors
+case class Green extends TrafficLightColors
+
+val myTrafficLightColors = new Red
+myTrafficLightColors match {
+  case x:Red => "STOP"
+  case y:Yellow => "WAITING"
+  case z:Green => "GO"
+  case _ => "NOTHING"
+}
+ */
+
+/*
+OPTION 类型, 记得 getOrElse 方法即可
+ */
+
+/*
+偏函数， 并非对所有输入值都有定义的函数
  */
