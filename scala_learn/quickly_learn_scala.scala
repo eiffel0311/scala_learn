@@ -782,5 +782,31 @@ OPTION 类型, 记得 getOrElse 方法即可
  */
 
 /*
-偏函数， 并非对所有输入值都有定义的函数
+偏函数， 并非对所有输入值都有定义的函数, 一般用case 处理
+ */
+def inc: PartialFunction[Any, Any]= { // any 是入口参数， any 是返回值
+    case i: Int => i + 1
+    case j: String => "String:" + j
+    case _ => None
+}
+
+val inc2 = new PartialFunction[Any, Double]{
+    def apply(any: Any):Double = {
+      any.asInstanceOf[Int] +  1
+    }
+    def isDefinedAt(any: Any):Boolean = {
+      if(any.isInstanceOf[Int])
+        true
+      else
+        false
+    }
+}
+
+println(List(1, 2, 3).map(inc))
+println(List(1, 2, 3).map(i => inc2(i)))
+println(List(1, 2, "1", 3, 3.2).map(i => inc(i)))
+
+
+/*
+第十五章 注解
  */
