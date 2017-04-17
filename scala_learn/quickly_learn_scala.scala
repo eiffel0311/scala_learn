@@ -107,8 +107,8 @@ array1(1) = 1
 var array2 = Array[Int](1, 2, 3)
 
 
-
-import scala.collection.mutable
+import scala.collection.immutable.ListSet
+import scala.collection.{immutable, mutable}
 import scala.collection.mutable.ArrayBuffer
 
 
@@ -810,3 +810,90 @@ println(List(1, 2, "1", 3, 3.2).map(i => inc(i)))
 /*
 第十五章 注解
  */
+
+/*
+第十六章 XML处理
+ */
+
+/*
+第十七章 类型参数
+ */
+
+// 1 泛型类, 类的构造函数是泛型
+case class FanXingClass[T](val name:T)
+val myFanXingClass = new FanXingClass("eiffel")
+println(myFanXingClass.name)
+
+// 2 泛型函数, 函数的入口参数是泛型
+def FanXingMethod[T](a: T):Unit ={
+  if(a.isInstanceOf[Int]){
+    println("I am Int type")
+  }else if(a.isInstanceOf[String]){
+    println("I am String type")
+  }
+}
+FanXingMethod(1)
+FanXingMethod("1")
+
+// 3 泛型变量界定, 参数的上下界
+def FanXingMethod2[T >: scala.collection.immutable.ListSet[Any] <: scala.collection.immutable.Iterable[Any]](a: T):Unit ={
+  a.foreach(println)
+}
+FanXingMethod2(scala.collection.immutable.Set(1, 2, 3, 4))
+
+// 4 视图界定， 解决类的隐式转换问题
+def FanXingMethod3[T <% Double](a: T):Unit ={
+  println(a)
+}
+FanXingMethod3(1) // int 虽然不是Double类型， 但是可以隐式转换成Double
+FanXingMethod3(2.3)
+
+// 5 上下文界定
+class FanXingClass2[T: Ordering](val a: T){} // 要求必须有一个Ordering[T] 的隐式转换
+
+// 6 Manifest 上下文界定， 处理泛型数组
+ def ManifestTest[T: Manifest](a: T): Array[T] ={
+  val r = new Array[T](1)
+  r(0) = a
+  r
+}
+println(ManifestTest(2).asInstanceOf[Array[Int]](0))  // 类型转换
+
+// 7 多重界定, 参考 3
+
+// 8 类型约束
+//  T =:= U
+//  T <:< U
+//  T %:% U
+case class LeiXingYueShu[T](val age:T)(implicit env:T <:< Int){}  // implicit env:T <:< Int 是用来约束泛型的
+val myLeiXingYueShu = new LeiXingYueShu(21)
+println(myLeiXingYueShu.age)
+
+// 9 型变: 协变和逆变都属于型变
+// Ａ　是　Ｂ　的子类，C[A]　是 C[B] 的子类, + 号表示
+// Ａ　是　Ｂ　的子类，C[B]　是 C[A] 的子类, -　号表示
+class PersonDef()
+class StudentDef extends PersonDef
+
+class PairPesonStudent[+T](a:T)
+class PairPesonStudent2[-T](a:T)
+
+def xingbianTestMethod(a: PairPesonStudent[PersonDef]): Unit ={
+  println("xian bian test")
+}
+
+
+def xingbianTestMethod2(a: PairPesonStudent2[StudentDef]): Unit ={
+  println("xian bian test")
+}
+// xingbianTestMethod 需要一个PairPesonStudent[PersonDef]　的参数，　但是可以用它的子类替换　PairPesonStudent[StudentDef]
+xingbianTestMethod(new PairPesonStudent[PersonDef](new StudentDef))
+// 传递了一个父类，　最终做了子类用, 此处很绕口
+xingbianTestMethod2(new PairPesonStudent2[PersonDef](new PersonDef).asInstanceOf[PairPesonStudent2[StudentDef]])
+
+
+// 10 协变和逆变点, 很晦涩，　一辈子都可能用不着，　过
+
+// 11 对象不能泛型
+
+// 12 类型通配符　_　代替　Ｔ
