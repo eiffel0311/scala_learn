@@ -107,6 +107,8 @@ array1(1) = 1
 var array2 = Array[Int](1, 2, 3)
 
 
+import java.util
+
 import scala.collection.immutable.ListSet
 import scala.collection.{immutable, mutable}
 import scala.collection.mutable.ArrayBuffer
@@ -892,8 +894,10 @@ xingbianTestMethod(new PairPesonStudent[PersonDef](new StudentDef))
 xingbianTestMethod2(new PairPesonStudent2[PersonDef](new PersonDef).asInstanceOf[PairPesonStudent2[StudentDef]])
 
 
-// 10 协变和逆变点, 很晦涩，　一辈子都可能用不着，　过
-
+// 10 协变和逆变点, 很晦涩，　一辈子都可能用不着, 过
+/*
+  描述入口参数和返回值的关系, 一般情况使用协变
+ */
 // 11 对象不能泛型
 
 // 12 类型通配符　_　代替　Ｔ
@@ -903,16 +907,32 @@ xingbianTestMethod2(new PairPesonStudent2[PersonDef](new PersonDef).asInstanceOf
 第十八章　高级类型
  */
 // 1 单例类型
+/*
+   v.type 的使用, 这样可以确切的返回当前类的引用
+ */
 
 // 2 类型投影
+/*
+   内部类的描述, class1#class2, 这样内部类可以被"一视同仁"
+ */
 
 // 3 路径
+/*
+   资源定位的描述, 可参考import 的语法, 路径是稳定的, 描述的是单个, 有穷的范围
+ */
 
 // 4 类型别名
+type index = util.HashMap[String, util.HashMap[String, String]]
 
 // 5 结构类型
+def indexOf2(target: {def indexOf[Any](elem: Any): Int}, ch: Int){
+  target.indexOf(ch)
+}
 
 // 6 复合类型
+ /*
+  混有特质的
+ */
 
 // 7 中置类型
 
