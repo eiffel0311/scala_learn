@@ -112,6 +112,7 @@ import java.util
 import scala.collection.immutable.ListSet
 import scala.collection.{immutable, mutable}
 import scala.collection.mutable.ArrayBuffer
+import scala.math.Fractional
 
 
 val array3 = new ArrayBuffer[Int]()
@@ -935,12 +936,21 @@ def indexOf2(target: {def indexOf[Any](elem: Any): Int}, ch: Int){
  */
 
 // 7 中置类型
+/*
+   String Map Int => Map[String, Int]
+ */
 
 // 8 存在类型
+/*
+   _
+ */
 
 // 9 scala 类型系统
 
 // 10 自身类型
+/*
+   this => ClassA
+ */
 
 // 11 依赖注入
 
@@ -949,3 +959,41 @@ def indexOf2(target: {def indexOf[Any](elem: Any): Int}, ch: Int){
 // 13 家族多态
 
 // 14 高等类型
+
+
+/*
+第 二十一 章　隐式转换和隐士参数
+ */
+//  1. 隐式转换
+implicit def int2Double(n: Int): Double = {
+  n.asInstanceOf[Double]
+}
+println(1.1 + int2Double(2))
+
+//  2. 利用隐式转换丰富现有类库的功能
+/*
+object Test {
+  implicit class RichFile(val from: File){
+    def read = Source.fromFile(from.getPath).mkString
+  }
+  //implicit def file2RichFile(from: File) = new RichFile(from)
+  def main(args: Array[String]): Unit = {
+    new File("filePath").read
+  }
+}
+ */
+//  3. 引入隐士转换
+//  4. 隐式转换规则
+/*
+1. 表达式的类型与预期不同时
+2. 对象的访问成员不存在时
+3. 表达式参数不对时，　同１
+简而言之, 会尝试使用隐式转换，　但是不会使用多次装换，　转换不能存在二义性
+ */
+//  5. 隐式参数
+//  6. 利用隐士参数进行隐式转换
+//  7. 上下文界定
+//  8. 类型证明
+//  9. @implicitNotFound
+//  10. CanBuildFrom
+
